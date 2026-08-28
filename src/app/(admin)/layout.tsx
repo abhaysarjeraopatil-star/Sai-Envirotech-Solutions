@@ -24,6 +24,7 @@ import {
   Building,
   Lock,
 } from "lucide-react";
+import SaiLogo from "@/components/SaiLogo";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -132,9 +133,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Mobile Admin Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200 shadow-sm">
         <Link href="/admin/dashboard" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black text-sm">
-            SA
-          </div>
+          <SaiLogo className="w-8 h-8 rounded-lg shadow-sm" />
           <div>
             <div className="text-sm font-bold text-slate-900">Sai AutoHub</div>
             <div className="text-[10px] text-slate-500 font-mono font-bold uppercase">
@@ -161,9 +160,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Brand & Factory Header */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-black text-lg shadow-md shadow-blue-500/20">
-                SA
-              </div>
+              <SaiLogo className="w-9 h-9 rounded-xl shadow-sm" />
               <div>
                 <div className="text-sm font-black text-slate-900 tracking-tight flex items-center gap-1.5">
                   <span>Sai AutoHub</span>

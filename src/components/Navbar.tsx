@@ -21,6 +21,7 @@ import {
   Lock,
 } from "lucide-react";
 import AIParserModal from "./AIParserModal";
+import SaiLogo from "./SaiLogo";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -81,9 +82,7 @@ export default function Navbar() {
           <div className="flex items-center gap-8">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-700 flex items-center justify-center text-white font-black text-xl shadow-md shadow-blue-500/20 group-hover:scale-105 transition-all">
-                SA
-              </div>
+              <SaiLogo className="w-10 h-10 group-hover:scale-105 transition-all shadow-sm" />
               <div>
                 <div className="text-base font-black text-slate-900 tracking-tight flex items-center gap-1.5 leading-none">
                   <span>Sai AutoHub</span>

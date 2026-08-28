@@ -12,6 +12,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
+import SaiLogo from "@/components/SaiLogo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -64,9 +65,7 @@ export default function LoginPage() {
         <div className="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl space-y-6">
           {/* Header */}
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-black text-xl mx-auto shadow-md shadow-blue-500/20">
-              SA
-            </div>
+            <SaiLogo className="w-14 h-14 mx-auto shadow-md" />
             <h1 className="text-2xl font-black text-slate-900 tracking-tight">
               Sign In to Sai AutoHub
             </h1>

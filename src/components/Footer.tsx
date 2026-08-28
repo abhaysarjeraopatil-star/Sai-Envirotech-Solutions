@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ShieldCheck, MapPin, Phone, Mail, ExternalLink } from "lucide-react";
+import SaiLogo from "./SaiLogo";
 
 export default function Footer() {
   return (
@@ -9,10 +10,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Col 1: Corporate Profile */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold">
-                SA
-              </div>
+            <div className="flex items-center gap-2.5">
+              <SaiLogo className="w-8 h-8 rounded-lg shadow-sm" />
               <span className="text-white font-bold text-base tracking-tight">Sai Envirotech Solutions</span>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed">
