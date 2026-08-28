@@ -207,10 +207,13 @@ export default function HomePage() {
               href={`/products?cat=${cat.slug}`}
               className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
-              <div className="relative h-48 overflow-hidden bg-slate-100">
+              <div className="relative h-48 overflow-hidden bg-slate-900">
                 <img
                   src={cat.image}
                   alt={cat.name}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLElement).style.display = 'none';
+                  }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent" />

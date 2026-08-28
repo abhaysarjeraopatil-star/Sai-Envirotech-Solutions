@@ -154,7 +154,7 @@ export const INITIAL_CATEGORIES = [
     name: "Automotive Accessories",
     slug: "automotive-accessories",
     description: "Heavy-duty exterior bumpers, footrests, and protection guards.",
-    image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1524486361537-8ad15938e1a3?w=800&auto=format&fit=crop&q=80",
     hsnDefault: "87071000",
   },
   {
@@ -162,7 +162,7 @@ export const INITIAL_CATEGORIES = [
     name: "Tractor & Earthmoving Covers",
     slug: "tractor-parts",
     description: "Deep-draw cold-rolled steel hoods, bonnets, JCB cabin covers, and heavy panels.",
-    image: "https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?w=800&auto=format&fit=crop&q=80",
+    image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sonalika_Tractor.jpg",
     hsnDefault: "8707",
   },
   {
@@ -170,7 +170,7 @@ export const INITIAL_CATEGORIES = [
     name: "Automobile Spare Parts",
     slug: "automobile-spare-parts",
     description: "Precision stamped replacement sheet metal panels and cab components.",
-    image: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=800&auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&auto=format&fit=crop&q=80",
     hsnDefault: "87071000",
   },
 ];

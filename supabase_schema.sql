@@ -347,9 +347,9 @@ INSERT INTO "TaxRate" ("id", "hsnCode", "description", "cgstRate", "sgstRate", "
 
 -- 5.2 Categories
 INSERT INTO "Category" ("id", "name", "slug", "description", "image") VALUES
-('cat-1', 'Automotive Accessories', 'automotive-accessories', 'Exterior automotive styling, heavy-duty bumpers, and protection accessories.', 'https://images.unsplash.com/photo-1541348263662-e0c82661200e?w=800&q=80'),
-('cat-2', 'Tractor Parts & Body Covers', 'tractor-parts', 'Heavy-gauge steel & fiberglass tractor hoods, side panels, and agricultural body assemblies.', 'https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?w=800&q=80'),
-('cat-3', 'Automobile Spare Parts', 'automobile-spare-parts', 'Precision engineered structural and mechanical replacement body parts.', 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=800&q=80');
+('cat-1', 'Automotive Accessories', 'automotive-accessories', 'Exterior automotive styling, heavy-duty bumpers, and protection accessories.', 'https://images.unsplash.com/photo-1524486361537-8ad15938e1a3?w=800&q=80'),
+('cat-2', 'Tractor Parts & Body Covers', 'tractor-parts', 'Heavy-gauge steel & fiberglass tractor hoods, side panels, and agricultural body assemblies.', 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sonalika_Tractor.jpg'),
+('cat-3', 'Automobile Spare Parts', 'automobile-spare-parts', 'Precision engineered structural and mechanical replacement body parts.', 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80');
 
 -- 5.3 Products
 INSERT INTO "Product" ("id", "sku", "name", "slug", "categoryId", "hsnCode", "taxRateId", "description", "material", "vehicleMake", "vehicleModel", "modelYearRange", "moq", "basePrice", "dimensions", "weightKg", "isVerified", "isDemo", "image") VALUES

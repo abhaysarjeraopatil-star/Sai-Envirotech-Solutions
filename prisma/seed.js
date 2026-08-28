@@ -68,7 +68,7 @@ async function main() {
       name: "Automotive Accessories",
       slug: "automotive-accessories",
       description: "Exterior automotive styling, heavy-duty bumpers, and protection accessories.",
-      image: "https://images.unsplash.com/photo-1541348263662-e0c82661200e?w=800&q=80",
+      image: "https://images.unsplash.com/photo-1524486361537-8ad15938e1a3?w=800&q=80",
     }
   });
 
@@ -77,7 +77,7 @@ async function main() {
       name: "Tractor Parts & Body Covers",
       slug: "tractor-parts",
       description: "Heavy-gauge steel & fiberglass tractor hoods, side panels, and agricultural body assemblies.",
-      image: "https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?w=800&q=80",
+      image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sonalika_Tractor.jpg",
     }
   });
 
@@ -86,7 +86,7 @@ async function main() {
       name: "Automobile Spare Parts",
       slug: "automobile-spare-parts",
       description: "Precision engineered structural and mechanical replacement body parts.",
-      image: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=800&q=80",
+      image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80",
     }
   });
 
