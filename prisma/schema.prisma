@@ -1,0 +1,399 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  SALES
+  INVENTORY
+  CUSTOMER
+}
+
+enum AddressType {
+  BILLING
+  SHIPPING
+  FACTORY
+}
+
+enum EnquirySource {
+  WEBSITE_RFQ
+  INDIAMART
+  WHATSAPP_ASSISTED
+  DIRECT
+}
+
+enum EnquiryStatus {
+  NEW
+  CONTACTED
+  SPECS_VERIFIED
+  QUOTATION_SENT
+  WON
+  LOST
+}
+
+enum QuotationStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum PaymentStatus {
+  PENDING
+  PARTIAL_ADVANCE
+  PAID_ON_DISPATCH
+  NET_30
+  COMPLETED
+}
+
+enum FulfillmentStatus {
+  CONFIRMED
+  IN_PRODUCTION
+  PACKED
+  DISPATCHED
+  DELIVERED
+  CANCELLED
+}
+
+enum MovementType {
+  PURCHASE_IN
+  RESERVATION_HOLD
+  DISPATCH_OUT
+  RETURN_IN
+  AUDIT_ADJUST
+}
+
+model User {
+  id           String           @id @default(cuid())
+  email        String           @unique
+  name         String
+  password     String           @default("demo123")
+  role         Role             @default(CUSTOMER)
+  phone        String?
+  avatar       String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  
+  customer     CustomerProfile?
+  assignedEnquiries Enquiry[]   @relation("AssignedTo")
+  createdQuotes Quotation[]     @relation("CreatedBy")
+  followUps    FollowUp[]       @relation("FollowUpBy")
+  auditLogs    AuditLog[]
+}
+
+model CustomerProfile {
+  id             String      @id @default(cuid())
+  userId         String      @unique
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName    String
+  gstin          String?
+  iecCode        String?     // Import-Export Code for exports
+  contactPerson  String
+  phone          String
+  email          String
+  creditTermDays Int         @default(0)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  addresses      Address[]
+  enquiries      Enquiry[]
+  quotations     Quotation[]
+  orders         Order[]
+}
+
+model Address {
+  id             String          @id @default(cuid())
+  customerId     String
+  customer       CustomerProfile @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  type           AddressType     @default(SHIPPING)
+  line1          String
+  line2          String?
+  city           String
+  district       String?
+  state          String
+  gstStateCode   String          // e.g. "27" for Maharashtra
+  pincode        String
+  country        String          @default("India")
+  isDefault      Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+}
+
+model TaxRate {
+  id            String    @id @default(cuid())
+  hsnCode       String    @unique // e.g. "87071000", "8707", "8708"
+  description   String
+  cgstRate      Float     @default(9.0) // 9%
+  sgstRate      Float     @default(9.0) // 9%
+  igstRate      Float     @default(18.0) // 18%
+  effectiveFrom DateTime  @default(now())
+  effectiveTo   DateTime?
+  active        Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  products      Product[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  image       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products    Product[]
+}
+
+model Product {
+  id                   String        @id @default(cuid())
+  sku                  String        @unique // e.g. "SE-CB-001"
+  name                 String
+  slug                 String        @unique
+  categoryId           String
+  category             Category      @relation(fields: [categoryId], references: [id])
+  hsnCode              String
+  taxRateId            String?
+  taxRate              TaxRate?      @relation(fields: [taxRateId], references: [id])
+  
+  description          String?
+  material             String?
+  vehicleMake          String?       // e.g. "Mahindra", "Tata", "Sonalika"
+  vehicleModel         String?       // e.g. "Bolero", "DI-750"
+  modelYearRange       String?       // e.g. "2020-2025"
+  moq                  Int           @default(10)
+  basePrice            Float         // Base unit price in INR
+  image                String?
+  dimensions           String?
+  weightKg             Float?
+  isVerified           Boolean       @default(true) // Verified from Sai Envirotech profile
+  isDemo               Boolean       @default(false) // Clearly marked demo item
+  status               String        @default("ACTIVE")
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  inventory            Inventory?
+  stockMovements       StockMovement[]
+  enquiryItems         EnquiryItem[]
+  quotationItems       QuotationItem[]
+  orderItems           OrderItem[]
+}
+
+model Inventory {
+  id             String    @id @default(cuid())
+  productId      String    @unique
+  product        Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  physicalStock  Int       @default(0) // Physical count in warehouse
+  reservedStock  Int       @default(0) // Committed to confirmed orders
+  minThreshold   Int       @default(10) // Low stock trigger
+  reorderQty     Int       @default(50)
+  warehouseBay   String?   @default("Bay-A1")
+  updatedAt      DateTime  @updatedAt
+}
+
+model StockMovement {
+  id           String       @id @default(cuid())
+  productId    String
+  product      Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  movementType MovementType
+  quantity     Int          // positive or negative based on context
+  referenceId  String?      // e.g. "ORD-2026-0041" or "PO-8912"
+  performedBy  String       @default("System / Inventory Manager")
+  note         String?
+  createdAt    DateTime     @default(now())
+}
+
+model Enquiry {
+  id             String         @id @default(cuid())
+  enquiryNumber  String         @unique // e.g. "ENQ-10482"
+  customerId     String?
+  customer       CustomerProfile? @relation(fields: [customerId], references: [id])
+  
+  contactName    String
+  companyName    String
+  email          String
+  phone          String
+  city           String?
+  state          String?
+  
+  source         EnquirySource  @default(WEBSITE_RFQ)
+  status         EnquiryStatus  @default(NEW)
+  priority       String         @default("MEDIUM") // "LOW", "MEDIUM", "HIGH", "URGENT"
+  
+  assignedToId   String?
+  assignedTo     User?          @relation("AssignedTo", fields: [assignedToId], references: [id])
+  
+  additionalReqs String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  items          EnquiryItem[]
+  followUps      FollowUp[]
+  quotations     Quotation[]
+}
+
+model EnquiryItem {
+  id               String   @id @default(cuid())
+  enquiryId        String
+  enquiry          Enquiry  @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  productId        String?
+  product          Product? @relation(fields: [productId], references: [id])
+  customItemName   String?
+  targetVehicle    String?
+  quantityRequested Int
+  targetPrice      Float?
+  createdAt        DateTime @default(now())
+}
+
+model Quotation {
+  id                 String          @id @default(cuid())
+  quoteNumber        String          @unique // e.g. "QT-2026-0012"
+  enquiryId          String?
+  enquiry            Enquiry?        @relation(fields: [enquiryId], references: [id])
+  customerId         String
+  customer           CustomerProfile @relation(fields: [customerId], references: [id])
+  createdById        String
+  createdBy          User            @relation("CreatedBy", fields: [createdById], references: [id])
+  
+  status             QuotationStatus @default(SENT)
+  validUntil         DateTime
+  
+  shippingStateCode  String          @default("27") // e.g. "27" (Maharashtra)
+  isInterState       Boolean         @default(false)
+  
+  netTaxableAmount   Float           // Subtotal before tax
+  discountAmount     Float           @default(0)
+  packagingCharges   Float           @default(0)
+  freightCharges     Float           @default(0)
+  cgstAmount         Float           @default(0)
+  sgstAmount         Float           @default(0)
+  igstAmount         Float           @default(0)
+  taxAmount          Float           // Total tax
+  grossOrderValue    Float           // Final payable amount
+  
+  paymentTerms       String?         @default("50% Advance with Purchase Order, 50% prior to dispatch")
+  deliveryTerms      String?         @default("Ex-Factory, Uran Islampur (Sangli)")
+  notes              String?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  items              QuotationItem[]
+  statusHistory      QuotationStatusHistory[]
+  order              Order?
+}
+
+model QuotationItem {
+  id              String    @id @default(cuid())
+  quotationId     String
+  quotation       Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  productId       String
+  product         Product   @relation(fields: [productId], references: [id])
+  hsnCode         String
+  quantity        Int
+  unitPrice       Float
+  discountPercent Float     @default(0)
+  taxRatePercent  Float     @default(18.0)
+  taxAmount       Float     @default(0)
+  totalTaxable    Float
+  totalWithTax    Float
+  createdAt       DateTime  @default(now())
+}
+
+model QuotationStatusHistory {
+  id          String          @id @default(cuid())
+  quotationId String
+  quotation   Quotation       @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  status      QuotationStatus
+  changedBy   String
+  note        String?
+  createdAt   DateTime        @default(now())
+}
+
+model Order {
+  id                String            @id @default(cuid())
+  orderNumber       String            @unique // e.g. "ORD-2026-0041"
+  trackingToken     String            @unique // Secure random token e.g. "AUT-8X3K9P"
+  quotationId       String?           @unique
+  quotation         Quotation?        @relation(fields: [quotationId], references: [id])
+  customerId        String
+  customer          CustomerProfile   @relation(fields: [customerId], references: [id])
+  
+  netTaxableAmount  Float
+  taxAmount         Float
+  packagingCharges  Float             @default(0)
+  freightCharges    Float             @default(0)
+  grossOrderValue   Float
+  
+  paymentStatus     PaymentStatus     @default(PENDING)
+  fulfillmentStatus FulfillmentStatus @default(CONFIRMED)
+  
+  transporterName   String?           // e.g. "VRL Logistics / DTDC"
+  trackingAwb       String?           // e.g. "VRL-MH-981245"
+  dispatchDate      DateTime?
+  estimatedDelivery DateTime?
+  actualDelivery    DateTime?
+  
+  shippingAddress   String?
+  notes             String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  items             OrderItem[]
+  statusHistory     OrderStatusHistory[]
+}
+
+model OrderItem {
+  id           String   @id @default(cuid())
+  orderId      String
+  order        Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id])
+  quantity     Int
+  unitPrice    Float
+  taxAmount    Float
+  totalPrice   Float
+  createdAt    DateTime @default(now())
+}
+
+model OrderStatusHistory {
+  id          String            @id @default(cuid())
+  orderId     String
+  order       Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status      FulfillmentStatus
+  changedBy   String
+  note        String?
+  createdAt   DateTime          @default(now())
+}
+
+model FollowUp {
+  id             String    @id @default(cuid())
+  enquiryId      String
+  enquiry        Enquiry   @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  employeeId     String
+  employee       User      @relation("FollowUpBy", fields: [employeeId], references: [id])
+  type           String    @default("PHONE") // "PHONE", "WHATSAPP", "EMAIL", "MEETING"
+  remarks        String
+  nextActionDate DateTime?
+  status         String    @default("COMPLETED") // "SCHEDULED", "COMPLETED", "CANCELLED"
+  createdAt      DateTime  @default(now())
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  action     String   // e.g. "ACCEPT_QUOTATION", "ADJUST_STOCK", "CREATE_ORDER"
+  entityType String   // e.g. "ORDER", "QUOTATION", "INVENTORY"
+  entityId   String
+  metadata   String?  // JSON serialized extra details
+  ipAddress  String?  @default("127.0.0.1")
+  createdAt  DateTime @default(now())
+}
