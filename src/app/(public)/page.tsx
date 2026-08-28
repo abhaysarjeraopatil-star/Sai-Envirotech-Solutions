@@ -9,6 +9,7 @@ import {
   Truck,
   FileCheck2,
   Layers,
+  Wrench,
   ArrowRight,
   Sparkles,
   CheckCircle2,
@@ -205,34 +206,50 @@ export default function HomePage() {
             <Link
               key={cat.id}
               href={`/products?cat=${cat.slug}`}
-              className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-xl hover:border-blue-300 transition-all duration-300 flex flex-col justify-between"
             >
-              <div className="relative h-48 overflow-hidden bg-slate-900">
-                <img
-                  src={cat.image}
-                  alt={cat.name}
-                  onError={(e) => {
-                    (e.currentTarget as HTMLElement).style.display = 'none';
+              {/* Technical Schematic Blueprint Header */}
+              <div className="relative h-44 overflow-hidden bg-gradient-to-b from-slate-900 via-slate-900 to-blue-950 flex flex-col items-center justify-center p-6 text-center select-none">
+                {/* Engineering Grid Overlay */}
+                <div 
+                  className="absolute inset-0 opacity-15 pointer-events-none"
+                  style={{
+                    backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0)`,
+                    backgroundSize: "20px 20px"
                   }}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-600 text-white">
-                    HSN {cat.hsnDefault}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent pointer-events-none" />
+
+                {/* Central Schematic Icon */}
+                <div className="relative z-10 w-16 h-16 rounded-2xl bg-white/95 backdrop-blur-md shadow-lg border border-white/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                  {cat.slug === "tractor-parts" ? (
+                    <Truck className="w-8 h-8 text-amber-600" />
+                  ) : cat.slug === "automobile-spare-parts" ? (
+                    <Wrench className="w-8 h-8 text-indigo-600" />
+                  ) : (
+                    <Layers className="w-8 h-8 text-blue-600" />
+                  )}
+                </div>
+
+                {/* HSN Tariff Tag & Category Title */}
+                <div className="relative z-10 flex flex-col items-center gap-1 text-white">
+                  <span className="text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full bg-blue-600/90 text-blue-50 border border-blue-400/30 shadow-sm">
+                    TARIFF HSN {cat.hsnDefault}
                   </span>
-                  <h3 className="text-base sm:text-lg font-bold mt-1 group-hover:text-blue-300 transition">
+                  <h3 className="text-base font-bold tracking-tight text-white group-hover:text-blue-300 transition mt-0.5">
                     {cat.name}
                   </h3>
                 </div>
               </div>
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+
+              {/* Description & Action */}
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-4 bg-white">
                 <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
                   {cat.description}
                 </p>
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600 group-hover:text-blue-700">
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600 group-hover:text-blue-700">
                   <span>Browse Part Numbers</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
                 </div>
               </div>
             </Link>
