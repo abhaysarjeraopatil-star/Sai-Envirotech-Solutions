@@ -273,7 +273,7 @@ export const INITIAL_PRODUCTS: ProductType[] = [
     modelYearRange: "2017-2025",
     moq: 8,
     basePrice: 3200.0,
-    image: "https://images.unsplash.com/photo-1541348263662-e0c82661200e?w=800&auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=800&auto=format&fit=crop&q=80",
     dimensions: "1100 x 750 x 180 mm",
     weightKg: 9.8,
     isVerified: true,
