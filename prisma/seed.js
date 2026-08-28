@@ -113,7 +113,7 @@ async function main() {
       weightKg: 8.5,
       isVerified: true,
       isDemo: false,
-      image: "https://cpimg.tistatic.com/07349952/b/4/Bolero-Front-Metal-Bumper.jpg",
+      image: "",
       stock: 45,
       reserved: 10,
       minThreshold: 15,
@@ -139,7 +139,7 @@ async function main() {
       weightKg: 22.0,
       isVerified: true,
       isDemo: false,
-      image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sonalika_Tractor.jpg",
+      image: "",
       stock: 28,
       reserved: 5,
       minThreshold: 10,
@@ -165,7 +165,7 @@ async function main() {
       weightKg: 7.2,
       isVerified: true,
       isDemo: false,
-      image: "https://apollo.olx.in/v1/files/j2v8rpoa2f822-IN/image",
+      image: "",
       stock: 60,
       reserved: 15,
       minThreshold: 20,
@@ -191,7 +191,7 @@ async function main() {
       weightKg: 9.8,
       isVerified: true,
       isDemo: false,
-      image: "https://cpimg.tistatic.com/6552984/b/1/front-fender-lining-mahindra-bolero-camper-grey-lh-rh-cinewjan-.jpeg",
+      image: "",
       stock: 35,
       reserved: 8,
       minThreshold: 12,
@@ -217,7 +217,7 @@ async function main() {
       weightKg: 18.5,
       isVerified: false,
       isDemo: true,
-      image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sonalika_Baagban_DI-30Rx_Tractor_Coorg_Feb24_A7C_09554.jpg",
+      image: "",
       stock: 12,
       reserved: 0,
       minThreshold: 8,
@@ -243,7 +243,7 @@ async function main() {
       weightKg: 12.0,
       isVerified: false,
       isDemo: true,
-      image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80",
+      image: "",
       stock: 8,
       reserved: 2,
       minThreshold: 5,
@@ -306,7 +306,7 @@ async function main() {
       password: "password123",
       role: "SALES",
       phone: "+91 98220 54321",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80"
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80"
     }
   });
 
@@ -317,7 +317,7 @@ async function main() {
       password: "password123",
       role: "INVENTORY",
       phone: "+91 98220 67890",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80"
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80"
     }
   });
 
@@ -328,7 +328,7 @@ async function main() {
       password: "password123",
       role: "CUSTOMER",
       phone: "+91 94230 88990",
-      avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&q=80"
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80"
     }
   });
 

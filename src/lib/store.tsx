@@ -44,7 +44,7 @@ export const USERS: UserPersona[] = [
     role: "SALES",
     roleTitle: "Sales Head & Commercial Lead",
     companyName: "Sai Envirotech Solutions",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80",
   },
   {
     id: "usr_inv_1",
@@ -53,7 +53,7 @@ export const USERS: UserPersona[] = [
     role: "INVENTORY",
     roleTitle: "Warehouse & Logistics Controller",
     companyName: "Sai Envirotech Solutions",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80",
   },
   {
     id: "usr_cust_1",
@@ -62,7 +62,7 @@ export const USERS: UserPersona[] = [
     role: "CUSTOMER",
     roleTitle: "Procurement Manager",
     companyName: "ABC Auto Spares & Logistics Pvt Ltd",
-    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&q=80",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80",
   },
 ];
 
