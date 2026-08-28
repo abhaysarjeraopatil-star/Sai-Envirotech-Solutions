@@ -208,18 +208,23 @@ export default function TrackOrderPage() {
             <div className="space-y-3">
               <h4 className="font-bold text-slate-900 uppercase tracking-wider">Consigned Part Items</h4>
               <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden bg-white">
-                {order.items.map((item, i) => (
-                  <div key={i} className="p-3 flex justify-between items-center text-xs">
-                    <div>
-                      <div className="font-bold text-slate-900">{item.productName}</div>
-                      <div className="text-[11px] text-slate-500 font-mono">SKU: {item.sku}</div>
+                {order.items.map((item, i) => {
+                  const lineTotal = item.totalPrice ?? (item.quantity * item.unitPrice);
+                  return (
+                    <div key={i} className="p-3 flex justify-between items-center text-xs">
+                      <div>
+                        <div className="font-bold text-slate-900">{item.productName}</div>
+                        <div className="text-[11px] text-slate-500 font-mono">
+                          {item.sku ? `SKU: ${item.sku}` : "HSN 87071000 • Factory Component"}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold text-slate-900">{item.quantity} pcs</div>
+                        <div className="text-[11px] text-slate-500">{formatINR(lineTotal)}</div>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <div className="font-bold text-slate-900">{item.quantity} pcs</div>
-                      <div className="text-[11px] text-slate-500">{formatINR(item.totalPrice)}</div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>

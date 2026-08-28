@@ -229,11 +229,9 @@ export default function Navbar() {
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   className="flex items-center gap-2 p-1.5 pr-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition cursor-pointer"
                 >
-                  <img
-                    src={currentUser.avatar}
-                    alt={currentUser.name}
-                    className="w-7 h-7 rounded-lg object-cover border border-slate-300"
-                  />
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-black text-xs flex items-center justify-center shadow-sm">
+                    {currentUser.name.split(" ").map((n) => n[0]).join("")}
+                  </div>
                   <div className="text-left hidden xl:block">
                     <div className="text-xs font-bold text-slate-900 leading-tight">
                       {currentUser.name}

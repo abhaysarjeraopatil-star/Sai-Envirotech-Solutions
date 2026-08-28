@@ -239,11 +239,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Sidebar User Footer & Fast Links */}
         <div className="p-4 border-t border-slate-100 bg-slate-50/70 space-y-3">
           <div className="flex items-center gap-3">
-            <img
-              src={currentUser.avatar}
-              alt={currentUser.name}
-              className="w-8 h-8 rounded-full object-cover border border-slate-300 flex-shrink-0"
-            />
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-black text-xs flex items-center justify-center shadow-sm flex-shrink-0">
+              {currentUser.name.split(" ").map((n) => n[0]).join("")}
+            </div>
             <div className="flex-1 min-w-0">
               <div className="text-xs font-bold text-slate-900 truncate">
                 {currentUser.name}

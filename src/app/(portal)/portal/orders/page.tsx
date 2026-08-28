@@ -86,20 +86,27 @@ export default function PortalOrdersPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium">
-                  {order.items.map((item, i) => (
-                    <tr key={i}>
-                      <td className="py-2.5">
-                        <div className="font-bold text-slate-900">{item.productName}</div>
-                        <div className="text-[11px] text-slate-500 font-mono">SKU: {item.sku}</div>
-                      </td>
-                      <td className="py-2.5 text-right font-mono font-bold">{item.quantity} pcs</td>
-                      <td className="py-2.5 text-right font-mono">{formatINR(item.unitPrice)}</td>
-                      <td className="py-2.5 text-right font-mono text-slate-600">{formatINR(item.taxAmount)}</td>
-                      <td className="py-2.5 text-right font-bold font-mono text-slate-900">
-                        {formatINR(item.totalPrice)}
-                      </td>
-                    </tr>
-                  ))}
+                  {order.items.map((item, i) => {
+                    const lineTaxable = item.quantity * item.unitPrice;
+                    const lineTax = item.taxAmount ?? Math.round(lineTaxable * 0.18);
+                    const lineTotal = item.totalPrice ?? (lineTaxable + lineTax);
+                    return (
+                      <tr key={i}>
+                        <td className="py-2.5">
+                          <div className="font-bold text-slate-900">{item.productName}</div>
+                          <div className="text-[11px] text-slate-500 font-mono">
+                            {item.sku ? `SKU: ${item.sku}` : "HSN 87071000 • Factory Component"}
+                          </div>
+                        </td>
+                        <td className="py-2.5 text-right font-mono font-bold">{item.quantity} pcs</td>
+                        <td className="py-2.5 text-right font-mono">{formatINR(item.unitPrice)}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-600">{formatINR(lineTax)}</td>
+                        <td className="py-2.5 text-right font-bold font-mono text-slate-900">
+                          {formatINR(lineTotal)}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
